@@ -1,5 +1,5 @@
 :root {
-
+	font-family: sans-serif;
 }
 
 .d-flex {
@@ -58,4 +58,21 @@ input {
 
 .color-red {
 	color: red;
+}
+
+.g-button {
+	display: flex;
+	width: 140px;
+	font-size: 18px;
+	background: none;
+	border: 1px solid black;
+	cursor: pointer;
+	text-decoration: unset;
+	color: black;
+	align-items: center;
+	justify-content: center;
+}
+
+.g-button:hover {
+	background-color: #afafaf40;
 }

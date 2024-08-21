@@ -1,39 +1,40 @@
 import { FormEvent, useState } from 'react';
 import styles from './registerForm.module.css';
+import Link from 'next/link';
 
 
 const RegisterForm = ({ username, setUsername, handleSubmit }: any) => {
 
 	const handleRegister = () => {
-    return {
-      redirect: {
-        destination: '/register',
-        permanent: false,
-      },
-    };
-  };
+		return {
+			redirect: {
+				destination: '/register',
+				permanent: false,
+			},
+		};
+	};
 
 	const [customError, setCustomError] = useState<any>('');
 
-  async function onSubmit(event: FormEvent<HTMLFormElement>) {
-    try {
+	async function onSubmit(event: FormEvent<HTMLFormElement>) {
+		try {
 			event.preventDefault()
 			const formData = new FormData(event.currentTarget);
-      const formObject = Object.fromEntries(formData.entries());
+			const formObject = Object.fromEntries(formData.entries());
 			const raw = JSON.stringify(formObject);
 			const myHeaders = new Headers();
 			myHeaders.append("Content-Type", "application/json");
 
-      const response = await fetch('/api/users', {
+			const response = await fetch('/api/users', {
 				method: "POST",
 				headers: myHeaders,
 				body: raw,
 				redirect: "follow"
-      })
- 
-      const data = await response.json()
+			})
 
-			if(!response.ok){
+			const data = await response.json()
+
+			if (!response.ok) {
 				console.log('xxxx', data.message)
 				setCustomError(data.message)
 			}
@@ -41,11 +42,11 @@ const RegisterForm = ({ username, setUsername, handleSubmit }: any) => {
 
 
 			return data
-    } catch (error: any) {
+		} catch (error: any) {
 			setCustomError(error.message)
 			console.error(error)
-    } 
-  }
+		}
+	}
 
 	return (
 		<div className={`${styles.loginContainer} p-3 `}>
@@ -72,19 +73,20 @@ const RegisterForm = ({ username, setUsername, handleSubmit }: any) => {
 				</div>
 
 				<div className='d-flex w-100 justify-content-center pb-5 gap-1'>
-					<button
-						className={styles.loginButton}
-						type="button"
-						onClick={handleRegister}
-					>
-						Register
-					</button>
+
+					<Link
+						className='g-button'
+						href={'/login'}
+					>Login</Link>
+
 					<button
 						className={styles.loginButton}
 						type="submit"
 					>
-						Login
+						Register
 					</button>
+
+
 				</div>
 			</form>
 
