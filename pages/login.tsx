@@ -5,14 +5,14 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from 'next'
 export const getServerSideProps = (async (context) => {
 
   const accessToken = context.req.cookies.accessToken || null;
-  if (!accessToken) {
+  if (accessToken) {
     return {
       redirect: {
-        destination: '/login',  // Redirect to the main page
+        destination: '/',
         permanent: false,
       },
     };
-  }
+  } 
 
   // Fetch data from external API
   const res = await fetch('https://api.github.com/repos/vercel/next.js')
@@ -33,7 +33,8 @@ export default function Page({
 
   return (
     <main>
-      <h1>Hello Main Page</h1>
+      <h1>Login</h1>
+      <LoginForm />
     </main>
   )
 }

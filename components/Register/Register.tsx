@@ -1,9 +1,18 @@
 import { FormEvent, useState } from 'react';
-import styles from './loginForm.module.css';
-import Link from 'next/link';
+import styles from './registerForm.module.css';
 
 
-const LoginForm = ({ username, setUsername, handleSubmit }: any) => {
+const RegisterForm = ({ username, setUsername, handleSubmit }: any) => {
+
+	const handleRegister = () => {
+    return {
+      redirect: {
+        destination: '/register',
+        permanent: false,
+      },
+    };
+  };
+
 	const [customError, setCustomError] = useState<any>('');
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -25,6 +34,7 @@ const LoginForm = ({ username, setUsername, handleSubmit }: any) => {
       const data = await response.json()
 
 			if(!response.ok){
+				console.log('xxxx', data.message)
 				setCustomError(data.message)
 			}
 			console.log(data.message)
@@ -62,10 +72,13 @@ const LoginForm = ({ username, setUsername, handleSubmit }: any) => {
 				</div>
 
 				<div className='d-flex w-100 justify-content-center pb-5 gap-1'>
-					<Link 
-						className='loginButton'
-						href={'/register'}
-					>Register</Link>
+					<button
+						className={styles.loginButton}
+						type="button"
+						onClick={handleRegister}
+					>
+						Register
+					</button>
 					<button
 						className={styles.loginButton}
 						type="submit"
@@ -79,4 +92,4 @@ const LoginForm = ({ username, setUsername, handleSubmit }: any) => {
 	);
 };
 
-export default LoginForm;
+export default RegisterForm;
