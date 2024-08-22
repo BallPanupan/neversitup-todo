@@ -11,7 +11,6 @@ const handler = NextAuth({
 				password: { label: "Password", type: "password" }
 			},
 			async authorize(credentials, req) {
-				console.log('payload: ', JSON.stringify(credentials))
 				const res = await fetch("https://candidate-assignment.neversitup.com/auth/login", {
 					method: 'POST',
 					body: JSON.stringify(credentials),

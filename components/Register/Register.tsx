@@ -35,11 +35,8 @@ const RegisterForm = ({ username, setUsername, handleSubmit }: any) => {
 			const data = await response.json()
 
 			if (!response.ok) {
-				console.log('xxxx', data.message)
 				setCustomError(data.message)
 			}
-			console.log(data.message)
-
 
 			return data
 		} catch (error: any) {

@@ -4,38 +4,65 @@ import Todo from '../Todo/Todo';
 
 export default function TodoList() {
 
-	const [todoListMessage, setTodoListMessage] = useState<string | null>(`Empty press 'Create' for add new todo`);
-
-	// const todoList: any = [] //[1,2,3,4,5,6]
-	const todoList: any = [
+	const rawtodoList: any = [
 		{
+			id: 1,
 			title: 1,
 			content: 'contentcontentcontentcontent contentcontentcontentcontent',
-			date: 'dd-mm-yyyy'
+			createDate: 'dd-mm-yyyy'
 		},
 		{
+			id: 2,
 			title: 2,
 			content: 'contentcontentcontentcontent contentcontentcontentcontent',
-			date: 'dd-mm-yyyy'
+			createDate: 'dd-mm-yyyy'
 		},
 		{
+			id: 3,
 			title: 3,
 			content: 'contentcontentcontentcontent contentcontentcontentcontent',
-			date: 'dd-mm-yyyy'
+			createDate: 'dd-mm-yyyy'
 		},
 	]
 
-	const Display = () => {
+	const [todoListMessage, setTodoListMessage] = useState<string | null>(`Empty press 'Create' for add new todo`);
+	
+	const [todoList, setTodoList] = useState<any>(rawtodoList);
+	const [removeTodo, setRemoveTodo] = useState<any>();
+	const [confirmRemoveTodo, setConfirmRemoveTodo] = useState<Boolean>(false);
 
+	console.log('removeTodo', removeTodo);
+
+
+	const Display = () => {
 		if (todoList.length > 0) {
+			console.log(todoList)
 			return (
-				todoList.map((data: any, index: number) => (<Todo key={index} content={data} />))
+				<>
+					{todoList.map((data: any, index: number) => (
+						<Todo 
+							key={index} 
+							props={data} 
+							setRemoveTodo={setRemoveTodo}
+						/>))}
+				</>
 			)
 		}
 		return todoListMessage
 	}
 
 
+	const handlerRemoveTodo = () => {
+		setRemoveTodo(null)
+	}
+
+	const handlerConfirmRemoveTodo = (confirm: any) => {
+
+		setTodoList(todoList.filter((data: any) => data.id !== removeTodo.id))
+
+		setConfirmRemoveTodo(false)
+		setRemoveTodo(null)
+	}
 
 	return (
 		<div className={styles.todoList}>
@@ -51,7 +78,18 @@ export default function TodoList() {
 				</button>
 			</div>
 
+			<div>
+				<p>popup alert <span onClick={handlerRemoveTodo}>Close</span></p>
 
+
+				{
+					removeTodo ? <>
+						<p onClick={()=> handlerConfirmRemoveTodo(!confirmRemoveTodo)}>Yes</p>
+						{ removeTodo.title || '' }
+					</>: null
+				}
+
+			</div>
 		</div>
 	)
 }

@@ -6,7 +6,6 @@ export default function Page() {
 
   const { data: session }: any = useSession()
 
-  console.log(session);
 
   if (session) {
     return (
