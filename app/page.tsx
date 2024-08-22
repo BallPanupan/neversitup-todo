@@ -10,7 +10,8 @@ export default function Page() {
   if (session) {
     return (
       <>
-        Signed in as {session.user?.name} <br />
+        <h1>Main Page</h1>
+        Hello {session.user?.name} <br />
         <button onClick={() => signOut()}>Sign out</button>
       </>
     )
