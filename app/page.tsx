@@ -1,15 +1,21 @@
 "use client"
 import React from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
+import TodoList from '@/components/TodoList/TodoList'
 export default function Page() {
 
-  const { data: session } = useSession()
+  const { data: session }: any = useSession()
+
+  console.log(session);
 
   if (session) {
     return (
       <>
         <h1>Todo App</h1>
-        Welcome {session.user?.name} <br />
+        Welcome {session.user?.username || ''} <br />
+
+        <TodoList />
+
         <button onClick={() => signOut()}>Sign out</button>
       </>
     )
