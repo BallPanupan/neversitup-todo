@@ -5,13 +5,11 @@ export default function Page() {
 
   const { data: session } = useSession()
 
-  console.log('session', session)
-
   if (session) {
     return (
       <>
-        <h1>Main Page</h1>
-        Hello {session.user?.name} <br />
+        <h1>Todo App</h1>
+        Welcome {session.user?.name} <br />
         <button onClick={() => signOut()}>Sign out</button>
       </>
     )

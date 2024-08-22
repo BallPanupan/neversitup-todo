@@ -6,7 +6,7 @@ export default function Page() {
   const { data: session } = useSession()
 
   if (!session) {
-		window.location.href = '/'
+		window.location.href = '/auth/signin'
   }
 
 	return (

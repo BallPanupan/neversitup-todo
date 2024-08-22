@@ -1,9 +1,12 @@
 import { useRef, useState } from 'react';
 import styles from './loginForm.module.css';
 import Link from 'next/link';
-import { signIn } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 
 const LoginForm = () => {
+
+	const { data: session } = useSession()
+
 	const username = useRef<HTMLInputElement>(null);
 	const password = useRef<HTMLInputElement>(null);
 
