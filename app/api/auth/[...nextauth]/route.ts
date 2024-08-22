@@ -1,6 +1,5 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
-import { signOut } from "next-auth/react"
 
 const handler = NextAuth({
 
@@ -19,15 +18,23 @@ const handler = NextAuth({
 					headers: { "Content-Type": "application/json" }
 				})
 				const user = await res.json()
-				
+
 				if (res.ok && user) {
-					console.log('router user', user)
-					return {...user, name: user.username}
-				}
+          return user
+        }
 				return null
-			}
+			},
 		})
 	],
+	callbacks: {
+    jwt: async ({ token, user }) => {
+      return { ...token, ...user };
+    },
+    session: async ({ session, token }) => {
+      session.user = token;
+      return session;
+    },
+  },
 	pages: {
 		signIn: '/auth/signin',
 		signOut: '/',
