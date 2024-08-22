@@ -1,24 +1,27 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import styles from './loginForm.module.css';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 
 const LoginForm = ({}: any) => {
 
-	const [customError, setCustomError] = useState<any>('');
+	const [customError, setCustomError] = useState<any>(null);
+	const username = useRef<HTMLInputElement>(null);
+	const password = useRef<HTMLInputElement>(null);
 
-	async function onSubmit(event: FormEvent<HTMLFormElement>) {
-		try {
-
-		} catch (error: any) {
-			setCustomError(error.message)
-			console.error(error)
-		}
+	const handleLogin = () => {
+		signIn('credentials', {
+			username: username.current?.value,
+			password: password.current?.value,
+			redirect: true,
+			callbackUrl: '/',
+		})
 	}
 
 	return (
 		<div className={`${styles.loginContainer} p-3`}>
 
-			<form onSubmit={onSubmit}>
+			<form onSubmit={handleLogin} method='POST'>
 				<div className='d-flex justify-content-center flex-direction-column p-3 gap-5'>
 					<p>username</p>
 					<input
@@ -27,6 +30,7 @@ const LoginForm = ({}: any) => {
 						name="username"
 						placeholder="Username"
 						required
+						ref={username}
 					/>
 					<p>password</p>
 					<input
@@ -35,6 +39,7 @@ const LoginForm = ({}: any) => {
 						name="password"
 						placeholder="password"
 						required
+						ref={password}
 					/>
 					<p className='d-flex justify-content-center color-red'>{customError}</p>
 				</div>
@@ -47,6 +52,7 @@ const LoginForm = ({}: any) => {
 					<button
 						className={styles.loginButton}
 						type="submit"
+						onClick={()=>handleLogin}
 					>
 						Login
 					</button>
