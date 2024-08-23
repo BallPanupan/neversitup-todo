@@ -1,14 +1,12 @@
 import { ClientComp } from "@/components/ClientComp/ClientComp";
 import { cookies } from "next/headers";
-import { createCookie } from "../actions";
 
 export default async function Page() {
 
-  // const cookieStore = cookies();
-  // const accessToken = cookieStore.get('accessToken')?.value;
+  const cookieStore = cookies();
+  const logToken = cookieStore.get('accessToken')?.value;
 
   const accessToken = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-
 
   // const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/todo`, {
   //   method: "GET",
@@ -25,5 +23,5 @@ export default async function Page() {
   
 
 
-  return <ClientComp data={result} token={accessToken} />;
+  return <ClientComp data={result} token={accessToken} logToken={logToken}/>;
 }
