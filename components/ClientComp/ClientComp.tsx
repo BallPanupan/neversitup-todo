@@ -4,9 +4,8 @@ import { createCookie } from "@/app/actions";
 import { useEffect, useState } from "react";
 
 export const ClientComp =  ({ data, token }: any) => {
-
+  // keep accessToken on Cookie 
   const [originalToken, setOriginalToken] = useState(token);
-
   if(originalToken){
     createCookie(originalToken);
     setOriginalToken(null);
