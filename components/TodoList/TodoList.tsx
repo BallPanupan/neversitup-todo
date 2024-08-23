@@ -1,46 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './todolist.module.css';
 import Todo from '../Todo/Todo';
-import Modal from '../Modal/Modal';
+import Modal from '../ModalDeleteTodo/ModalDeleteTodo';
 
-export default function TodoList() {
+export default function TodoList({listTodo, setListTodo}: any) {
+
 	interface ErrorMessage {
 		id?: string,
 		title?: string,
 		message?: string,
 	}
 
-	const rawtodoList: any = [
-		{
-			id: 1,
-			title: 'Hello Number 1',
-			content: 'contentcontentcontentcontent contentcontentcontentcontent',
-			createDate: 'dd-mm-yyyy'
-		},
-		{
-			id: 2,
-			title: 'Hello Number 2',
-			content: 'contentcontentcontentcontent contentcontentcontentcontent',
-			createDate: 'dd-mm-yyyy'
-		},
-		{
-			id: 3,
-			title: 'Hello Number 3',
-			content: 'contentcontentcontentcontent contentcontentcontentcontent',
-			createDate: 'dd-mm-yyyy'
-		},
-	]
-
 	const [todoListMessage, setTodoListMessage] = useState<string | null>(`Empty press 'Create' for add new todo`);
-	const [todoList, setTodoList] = useState<any>(rawtodoList);
 	const [errorMessage, setErrorMessage] = useState<ErrorMessage>({});
 
 	const Display = () => {
-		if (todoList.length > 0) {
-			console.log(todoList)
+		if (listTodo.length > 0) {
 			return (
 				<>
-					{todoList.map((data: any, index: number) => (
+					{listTodo.map((data: any, index: number) => (
 						<Todo
 							key={index}
 							props={data}
@@ -54,7 +32,7 @@ export default function TodoList() {
 
 	const confirmRemove = (confirm: boolean) =>{
 		if(confirm){
-			setTodoList(todoList.filter((data: any) => data.id !== errorMessage.id))
+			setListTodo(listTodo.filter((data: any) => data.id !== errorMessage.id))
 			setErrorMessage({})
 		}
 	}
