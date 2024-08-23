@@ -73,6 +73,20 @@ input {
 	color: red;
 }
 
+.g-button-red {
+	display: flex;
+	width: 140px;
+	font-size: 18px;
+	background: none;
+	border: 1px solid black;
+	cursor: pointer;
+	text-decoration: unset;
+	color: #ffffff;
+	align-items: center;
+	justify-content: center;
+	background-color: rgb(255, 82, 82);
+}
+
 .g-button {
 	display: flex;
 	width: 140px;
@@ -81,7 +95,7 @@ input {
 	border: 1px solid black;
 	cursor: pointer;
 	text-decoration: unset;
-	color: black;
+	color: #000000;
 	align-items: center;
 	justify-content: center;
 }

@@ -3,9 +3,15 @@ import styles from './todo.module.css';
 
 export default function Todo(props: any) {
 	const { id, title, content, createDate } = props.props
+
   const handlerRemoveTodo = (data: any) => {
-		props.setRemoveTodo(data);
+		props.setErrorMessage({
+			id: data.id,
+			title: data.title,
+			message: data.content,
+		})
   };
+
 	return (
 		<div className={styles.todo}>
 			
