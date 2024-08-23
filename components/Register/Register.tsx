@@ -1,92 +1,81 @@
-import { FormEvent, useState } from 'react';
+import { useRef, useState } from 'react';
 import styles from './registerForm.module.css';
 import Link from 'next/link';
 
+const RegisterForm = () => {
 
-const RegisterForm = ({ username, setUsername, handleSubmit }: any) => {
+	const username = useRef<HTMLInputElement>(null);
+	const password = useRef<HTMLInputElement>(null);
 
-	const handleRegister = () => {
-		return {
-			redirect: {
-				destination: '/register',
-				permanent: false,
-			},
-		};
+	const [customError, setCustomError] = useState<string | null>(null);
+
+	const handleRegister = async (event: React.FormEvent) => {
+		event.preventDefault();
+		const myHeaders = new Headers();
+		myHeaders.append("Content-Type", "application/json");
+		
+		const raw = JSON.stringify({
+			username: username.current?.value,
+			password: password.current?.value,
+		});
+
+		const response = await fetch('/service/users', {
+			method: "POST",
+			headers: myHeaders,
+			body: raw,
+			redirect: "follow"
+		})
+		const data = await response.json()
+		setCustomError(response.ok ? 'Done' : data.message);
 	};
 
-	const [customError, setCustomError] = useState<any>('');
-
-	async function onSubmit(event: FormEvent<HTMLFormElement>) {
-		try {
-			event.preventDefault()
-			const formData = new FormData(event.currentTarget);
-			const formObject = Object.fromEntries(formData.entries());
-			const raw = JSON.stringify(formObject);
-			const myHeaders = new Headers();
-			myHeaders.append("Content-Type", "application/json");
-
-			const response = await fetch('/api/users', {
-				method: "POST",
-				headers: myHeaders,
-				body: raw,
-				redirect: "follow"
-			})
-
-			const data = await response.json()
-
-			if (!response.ok) {
-				setCustomError(data.message)
-			}
-
-			return data
-		} catch (error: any) {
-			setCustomError(error.message)
-			console.error(error)
-		}
+	const RegisterResult = () => {
+		return (<p className={`d-flex justify-content-center ${ customError !== 'Done' ? 'color-red' : 'color-green' }`}>{customError}</p>)
 	}
 
 	return (
-		<div className={`${styles.loginContainer} p-3 `}>
-
-			<form onSubmit={onSubmit}>
+		<div className={`${styles.loginContainer} p-3`}>
+			<form onSubmit={handleRegister}>
 				<div className='d-flex justify-content-center flex-direction-column p-3 gap-5'>
-					<p>username</p>
-					<input
-						type="text"
-						id="username"
-						name="username"
-						placeholder="Username"
-						required
-					/>
-					<p>password</p>
-					<input
-						type="password"
-						id="password"
-						name="password"
-						placeholder="password"
-						required
-					/>
-					<p className='d-flex justify-content-center color-red'>{customError}</p>
+					<label className='d-flex flex-direction-column'>
+						Username
+						<input
+							type="text"
+							id="username"
+							name="username"
+							placeholder="Username"
+							required
+							ref={username}
+						/>
+					</label>
+
+					<label className='d-flex flex-direction-column'>
+						Password
+						<input
+							type="password"
+							id="password"
+							name="password"
+							placeholder="Password"
+							required
+							ref={password}
+						/>
+					</label>
+
+					{/* {customError && (
+						<p className='d-flex justify-content-center color-red'>{customError}</p>
+					)} */}
+					<RegisterResult />
 				</div>
 
 				<div className='d-flex w-100 justify-content-center pb-5 gap-1'>
-
-					<Link
-						className='g-button'
-						href={'/login'}
-					>Login</Link>
-
-					<button
-						className={styles.loginButton}
-						type="submit"
-					>
+					<Link className='g-button' href={'/auth/signin'}>
+						Login
+					</Link>
+					<button className='g-button-green' type="submit">
 						Register
 					</button>
-
-
 				</div>
 			</form>
-
 		</div>
 	);
 };

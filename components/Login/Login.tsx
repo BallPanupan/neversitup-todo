@@ -55,7 +55,7 @@ const LoginForm = () => {
 					</label>
 
 					{customError && (
-						<p className='d-flex justify-content-center text-danger'>{customError}</p>
+						<p className='d-flex justify-content-center'>{customError}</p>
 					)}
 				</div>
 
@@ -63,7 +63,7 @@ const LoginForm = () => {
 					<Link className='g-button' href={'/register'}>
 						Register
 					</Link>
-					<button className={styles.loginButton} type="submit">
+					<button className='g-button-green' type="submit">
 						Login
 					</button>
 				</div>
