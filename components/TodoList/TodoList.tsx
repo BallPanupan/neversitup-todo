@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from './todolist.module.css';
 import Todo from '../Todo/Todo';
-import Modal from '../ModalDeleteTodo/ModalDeleteTodo';
+import ModalDeleteTodo from '../ModalDeleteTodo/ModalDeleteTodo';
 
 export default function TodoList({listTodo, setListTodo}: any) {
 
@@ -53,7 +53,7 @@ export default function TodoList({listTodo, setListTodo}: any) {
 
 			<div>
 
-				<Modal 
+				<ModalDeleteTodo 
 					show={errorMessage} 
 					onClose={setErrorMessage} 
 					message={errorMessage} 

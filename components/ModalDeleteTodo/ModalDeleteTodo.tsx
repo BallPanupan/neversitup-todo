@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from './ModalDeleteTodo.module.css';
 import { useSession } from 'next-auth/react';
 
-export default function Modal({ show, onClose, message, confirmRemove }: any) {
+export default function ModalDeleteTodo({ show, onClose, message, confirmRemove }: any) {
 	const { data: session }: any = useSession();
 	const [token, setToken] = useState(null);
 

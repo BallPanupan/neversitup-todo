@@ -60,15 +60,7 @@ export default function () {
 
   return (
     <>
-      <h1>Main Page</h1>
-      Not signed in <br />
-      {/* <button onClick={() => signIn()}>Sign in</button>
-      <Link className='g-button' href={'/register'}>
-        Register
-      </Link> */}
-
       <LoginForm />
-
     </>
   )
 }

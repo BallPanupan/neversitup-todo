@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styles from './todo.module.css';
 
 export default function Todo(props: any) {
-	const { id, title, content, createDate } = props.props
+	const { id, title, content, created_at } = props.props
 
   const handlerRemoveTodo = (data: any) => {
 		props.setErrorMessage({
@@ -17,13 +17,13 @@ export default function Todo(props: any) {
 			
 			<div className='d-flex justify-content-between'>
 				<div className='cursor-pointer'><h4> { title || 'title' } </h4></div>
-				<div className='cursor-pointer' onClick={()=> handlerRemoveTodo({id, title, content, createDate})}>close</div>
+				<div className='cursor-pointer' onClick={()=> handlerRemoveTodo({id, title, content, created_at})}>close</div>
 			</div>
 
 			<div className='cursor-pointer'>
 				{ content || 'content' }
 			</div>
-			<div className={`${styles.date} d-flex flex-direction-reverse`}>{ createDate || 'createDate' }</div>
+			<div className={`${styles.date} d-flex flex-direction-reverse`}>{ created_at || 'createDate' }</div>
 		</div>
 	)
 }
