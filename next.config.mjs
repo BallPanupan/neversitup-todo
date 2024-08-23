@@ -4,7 +4,7 @@ const nextConfig = {
 		return [
 			{
 				source: '/service/:path*',
-				destination: 'https://candidate-assignment.neversitup.com/:path*',
+				destination: `${process.env.NEXT_PUBLIC_API_BASE_URL}/:path*`,
 			},
 		]
 	},
