@@ -2,17 +2,27 @@ import React, { useEffect, useState } from 'react'
 import styles from './todolist.module.css';
 import Todo from '../Todo/Todo';
 import ModalDeleteTodo from '../ModalDeleteTodo/ModalDeleteTodo';
+import ModalEditTodo from '../ModalEditTodo/ModalEditTodo';
+
+interface ErrorMessage {
+	id?: string,
+	title?: string,
+	message?: string,
+}
 
 export default function TodoList({listTodo, setListTodo}: any) {
 
-	interface ErrorMessage {
-		id?: string,
-		title?: string,
-		message?: string,
-	}
-
 	const [todoListMessage, setTodoListMessage] = useState<string | null>(`Empty press 'Create' for add new todo`);
 	const [errorMessage, setErrorMessage] = useState<ErrorMessage>({});
+
+
+	const [editTodo, setEditTodo] = useState<any>();
+
+	const closeEdit = () => {
+		setEditTodo(null)
+	}
+
+
 
 	const Display = () => {
 		if (listTodo.length > 0) {
@@ -23,6 +33,7 @@ export default function TodoList({listTodo, setListTodo}: any) {
 							key={index}
 							props={data}
 							setErrorMessage={setErrorMessage}
+							setEditTodo={setEditTodo}
 						/>))}
 				</>
 			)
@@ -58,6 +69,14 @@ export default function TodoList({listTodo, setListTodo}: any) {
 					onClose={setErrorMessage} 
 					message={errorMessage} 
 					confirmRemove={confirmRemove}
+				/>
+
+				<ModalEditTodo
+					show={editTodo}
+					onClose={closeEdit} 
+					data={editTodo} 
+					listTodo={listTodo}
+					setListTodo={setListTodo}
 				/>
 
 			</div>
