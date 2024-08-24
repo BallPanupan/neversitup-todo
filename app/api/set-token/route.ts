@@ -5,7 +5,6 @@ export async function POST(request: Request) {
 
   const cookieOptions: any = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
     path: '/',
   };
 
