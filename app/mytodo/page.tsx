@@ -7,14 +7,13 @@ export default function () {
   const cookieStore = cookies();
   const token = cookieStore.get('accessToken')?.value;
 
-  if(token){
-    redirect('/mytodo')
+  if(!token){
+    redirect('/')
   }
 
   return (
     <>
-      <h1>Home Page</h1>
-      <LoginForm />
+      <h1>my todo</h1>
     </>
   )
 }

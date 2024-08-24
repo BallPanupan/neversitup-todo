@@ -8,23 +8,27 @@ const LoginForm = () => {
 	const [customError, setCustomError] = useState<string | null>(null);
 	const router = useRouter();
 
-	const [token, setToken] = useState(null);
+	const [user, setUser] = useState<any>();
+	
   useEffect(() => {
     const saveTokenInCookie = async () => {
-      if (token) {
-        // Call API route to save token in cookie
+      if (user) {
+				const raw = JSON.stringify({ 
+					accessToken: user.accessToken,
+					username: user.username 
+				})
         await fetch('/api/set-token', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ accessToken: token }),
+          body: raw,
         });
 				router.push('/mytodo');
       }
     };
     saveTokenInCookie();
-  }, [token]);
+  }, [user]);
 
 	const username = useRef<HTMLInputElement>(null);
 	const password = useRef<HTMLInputElement>(null);
@@ -48,9 +52,13 @@ const LoginForm = () => {
 		if (!response.ok) {
 			setCustomError('login failed')
 		}
-		const data = await response.json()
-		setToken(data.access_token)
-		return data
+		const user = await response.json()
+		setUser({
+			accessToken: user.access_token,
+			username: user.username
+		})
+	
+		return user
 	};
 
 	return (
