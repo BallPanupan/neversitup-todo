@@ -10,7 +10,7 @@ export async function POST(request: Request) {
 
   const response = NextResponse.json({ message: 'Token saved in cookie' });
   response.cookies.set('accessToken', data.accessToken, cookieOptions);
-  response.cookies.set('name', data.username, cookieOptions);
+  response.cookies.set('username', data.username, cookieOptions);
 
   return response;
 }
