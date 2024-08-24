@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import styles from './ModalDeleteTodo.module.css';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 
 export default function ModalDeleteTodo({ show, onClose, message, confirmRemove }: any) {
-	const { data: session }: any = useSession();
+	// const { data: session }: any = useSession();
 	const [token, setToken] = useState(null);
 
 	const deleteTodo = async (id: any) => {
@@ -32,11 +32,11 @@ export default function ModalDeleteTodo({ show, onClose, message, confirmRemove 
 		}
 	}
 
-	useEffect(() => {
-		if (session) {
-			setToken(session.user?.access_token);
-		}
-	}, [session]);
+	// useEffect(() => {
+	// 	if (session) {
+	// 		setToken(session.user?.access_token);
+	// 	}
+	// }, [session]);
 
 	const id = message?.id;
 	const title = message?.title;

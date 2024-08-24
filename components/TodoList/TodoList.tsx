@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react'
 import styles from './todolist.module.css';
 import Todo from '../Todo/Todo';
@@ -12,6 +13,8 @@ interface ErrorMessage {
 
 export default function TodoList({listTodo, setListTodo}: any) {
 
+	console.log({listTodo})
+
 	const [todoListMessage, setTodoListMessage] = useState<string | null>(`Empty press 'Create' for add new todo`);
 	const [errorMessage, setErrorMessage] = useState<ErrorMessage>({});
 
@@ -21,8 +24,6 @@ export default function TodoList({listTodo, setListTodo}: any) {
 	const closeEdit = () => {
 		setEditTodo(null)
 	}
-
-
 
 	const Display = () => {
 		if (listTodo.length > 0) {

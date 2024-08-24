@@ -1,15 +1,16 @@
+"use client"
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './ModalEditTodo.module.css';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 
 export default function ModalEditTodo({ show, onClose, data, listTodo, setListTodo }: any) {
-	const { data: session }: any = useSession();
+	// const { data: session }: any = useSession();
 	const [token, setToken] = useState(null);
-	useEffect(() => {
-		if (session) {
-			setToken(session.user?.access_token);
-		}
-	}, [session]);
+	// useEffect(() => {
+	// 	if (session) {
+	// 		setToken(session.user?.access_token);
+	// 	}
+	// }, [session]);
 
 
   const [title, setTitle] = useState(data?.title || '');
