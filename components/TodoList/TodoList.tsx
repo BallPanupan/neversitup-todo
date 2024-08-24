@@ -13,7 +13,7 @@ interface ErrorMessage {
 }
 
 export default function TodoList({data}: any) {
-	const [listTodo, setListTodo] = useState<any>(data);
+	const [listTodo, setListTodo] = useState<any>(data || []);
 
 	// useEffect(()=>{
 	// }, [listTodo])
