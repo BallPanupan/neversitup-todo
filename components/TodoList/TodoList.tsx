@@ -4,6 +4,7 @@ import styles from './todolist.module.css';
 import Todo from '../Todo/Todo';
 import ModalDeleteTodo from '../ModalDeleteTodo/ModalDeleteTodo';
 import ModalEditTodo from '../ModalEditTodo/ModalEditTodo';
+import ModalCreateTodo from '../ModalCreateTodo/ModalCreateTodo';
 
 interface ErrorMessage {
 	id?: string,
@@ -13,15 +14,17 @@ interface ErrorMessage {
 
 export default function TodoList({data}: any) {
 	const [listTodo, setListTodo] = useState<any>(data);
-	
-	useEffect(()=>{
-	}, [listTodo])
+
+	// useEffect(()=>{
+	// }, [listTodo])
 
 	const [todoListMessage, setTodoListMessage] = useState<string | null>(`Empty press 'Create' for add new todo`);
 	const [errorMessage, setErrorMessage] = useState<ErrorMessage>({});
 
 
 	const [editTodo, setEditTodo] = useState<any>();
+	const [closeCreateTodo, setCloseCreateTodo] = useState<boolean>(false);
+
 
 	const closeEdit = () => {
 		setEditTodo(null)
@@ -51,6 +54,11 @@ export default function TodoList({data}: any) {
 		}
 	}
 
+	const createTodo = () => {
+		setCloseCreateTodo(!closeCreateTodo)
+	}
+
+
 	return (
 		<div className={styles.todoList}>
 
@@ -60,17 +68,23 @@ export default function TodoList({data}: any) {
 
 
 			<div className='d-flex justify-content-center p-1'>
-				<button className={styles.loginButton} type="submit">
+				<button className={styles.loginButton} type="submit" onClick={createTodo}>
 					+ Create
 				</button>
+				<ModalCreateTodo
+					show={closeCreateTodo}
+					onClose={setCloseCreateTodo}
+					listTodo={listTodo} 
+					setListTodo={setListTodo}
+				/>
 			</div>
 
 			<div>
 
-				<ModalDeleteTodo 
-					show={errorMessage} 
-					onClose={setErrorMessage} 
-					message={errorMessage} 
+				<ModalDeleteTodo
+					show={errorMessage}
+					onClose={setErrorMessage}
+					message={errorMessage}
 					confirmRemove={confirmRemove}
 				/>
 
