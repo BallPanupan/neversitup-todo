@@ -22,14 +22,11 @@ export default async function () {
     redirect: "follow"
   })
   const result = await response.json()
-
-  console.log({token})
-
   return (
     <>
       <h1>my todo</h1>
       <h2>welcome {username} </h2>
-      <TodoList listTodo={result.data} />
+      <TodoList data={result.data} />
       <LogoutButton />
     </>
   )

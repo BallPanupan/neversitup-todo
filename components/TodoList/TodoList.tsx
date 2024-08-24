@@ -11,9 +11,11 @@ interface ErrorMessage {
 	message?: string,
 }
 
-export default function TodoList({listTodo, setListTodo}: any) {
-
-	console.log({listTodo})
+export default function TodoList({data}: any) {
+	const [listTodo, setListTodo] = useState<any>(data);
+	
+	useEffect(()=>{
+	}, [listTodo])
 
 	const [todoListMessage, setTodoListMessage] = useState<string | null>(`Empty press 'Create' for add new todo`);
 	const [errorMessage, setErrorMessage] = useState<ErrorMessage>({});
