@@ -1,17 +1,8 @@
+"use client"
 import React, { useEffect, useRef, useState } from 'react'
 import styles from './ModalEditTodo.module.css';
-import { useSession } from 'next-auth/react';
 
 export default function ModalEditTodo({ show, onClose, data, listTodo, setListTodo }: any) {
-	const { data: session }: any = useSession();
-	const [token, setToken] = useState(null);
-	useEffect(() => {
-		if (session) {
-			setToken(session.user?.access_token);
-		}
-	}, [session]);
-
-
   const [title, setTitle] = useState(data?.title || '');
   const [description, setDescription] = useState(data?.description || '');
 
@@ -28,11 +19,10 @@ export default function ModalEditTodo({ show, onClose, data, listTodo, setListTo
 				title: title,
 				description: description,
 			});
-			const response = await fetch(`/service/todo/${todo.id}`, {
+			const response = await fetch(`/api/todo/${todo.id}`, {
 				method: "PATCH",
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${token}`
 				},
 				body: raw,
 				redirect: "follow"
@@ -40,8 +30,6 @@ export default function ModalEditTodo({ show, onClose, data, listTodo, setListTo
 			if (!response.ok) {
 				return false
 			}
-			const data = await response.json()
-			if (data.isSuccess) console.log(`PATCH ${todo.id} is Done`)
 			return true
 		} catch {
 			return false
@@ -61,12 +49,13 @@ export default function ModalEditTodo({ show, onClose, data, listTodo, setListTo
 			}
 			return obj;
 		});
+		
 		const update = await updateTodo({ id: data.id, title, description })
 		console.log('update result', update)
 		if(update) {
 			setListTodo(updateArray)
 		} else{
-			window.location.reload();
+			// window.location.reload();
 		}
   };
 

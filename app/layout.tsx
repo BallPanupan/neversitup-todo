@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { CustomProvider } from "./provider";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,10 +18,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <CustomProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </CustomProvider>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+    </html>
   );
 }

@@ -1,3 +1,4 @@
+"use client"
 import { useRef, useState } from 'react';
 import styles from './registerForm.module.css';
 import Link from 'next/link';
@@ -68,7 +69,7 @@ const RegisterForm = () => {
 				</div>
 
 				<div className='d-flex w-100 justify-content-center pb-5 gap-1'>
-					<Link className='g-button' href={'/auth/signin'}>
+					<Link className='g-button' href={'/'}>
 						Login
 					</Link>
 					<button className='g-button-green' type="submit">
