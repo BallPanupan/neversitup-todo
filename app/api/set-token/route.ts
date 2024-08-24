@@ -9,7 +9,7 @@ export async function POST(request: Request) {
   };
 
   const response = NextResponse.json({ message: 'Token saved in cookie' });
-  response.cookies.set('accessToken', 'accessToken-xxxxx-1', cookieOptions);
+  response.cookies.set('accessToken', accessToken, cookieOptions);
 
   return response;
 }

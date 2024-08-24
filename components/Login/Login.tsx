@@ -1,34 +1,61 @@
-import { useRef, useState } from 'react';
+"use client"
+import { useEffect, useRef, useState } from 'react';
 import styles from './loginForm.module.css';
 import Link from 'next/link';
-import { signIn, useSession } from 'next-auth/react';
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
+	const [customError, setCustomError] = useState<string | null>(null);
+	const router = useRouter();
 
-	const { data: session } = useSession()
+	const [token, setToken] = useState(null);
+  useEffect(() => {
+    const saveTokenInCookie = async () => {
+      if (token) {
+        // Call API route to save token in cookie
+        await fetch('/api/set-token', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ accessToken: token }),
+        });
+				router.push('/mytodo');
+      }
+    };
+    saveTokenInCookie();
+  }, [token]);
 
 	const username = useRef<HTMLInputElement>(null);
 	const password = useRef<HTMLInputElement>(null);
 
-	const [customError, setCustomError] = useState<string | null>(null);
-
 	const handleLogin = async (event: React.FormEvent) => {
 		event.preventDefault();
-		const result = await signIn('credentials', {
+
+		const raw = JSON.stringify({
 			username: username.current?.value,
 			password: password.current?.value,
-			redirect: true,
-			callbackUrl: '/'
 		});
+		const response = await fetch('/service/auth/login', {
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: raw,
+			redirect: "follow"
+		})
 
-		if (!result) {
-			setCustomError("Invalid username or password");
+		if (!response.ok) {
+			setCustomError('login failed')
 		}
+		const data = await response.json()
+		setToken(data.access_token)
+		return data
 	};
 
 	return (
 		<div className={`${styles.loginContainer} p-3`}>
-			<form onSubmit={handleLogin}>
+			<form onSubmit={handleLogin} method='POST'>
 				<div className='d-flex justify-content-center flex-direction-column p-3 gap-5'>
 					<label className='d-flex flex-direction-column'>
 						Username
@@ -55,7 +82,7 @@ const LoginForm = () => {
 					</label>
 
 					{customError && (
-						<p className='d-flex justify-content-center'>{customError}</p>
+						<p className='d-flex justify-content-center color-red'>{customError}</p>
 					)}
 				</div>
 
