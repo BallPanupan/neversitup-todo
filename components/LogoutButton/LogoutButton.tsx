@@ -1,11 +1,11 @@
 "use client"
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
 export default function LogoutButton() {
 	const router = useRouter();
-	const handleLogout = async (event: React.FormEvent) => {
-		event.preventDefault();
+	const handleLogout = async () => {
 		const response = await fetch('/api/clear-token', {
 			method: "POST",
 			headers: {
@@ -14,7 +14,7 @@ export default function LogoutButton() {
 			redirect: "follow"
 		})
 		if (response.ok) {
-			router.push('/');
+			window.location.replace("/");
 		}
 		return true
 	};
