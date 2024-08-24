@@ -26,7 +26,28 @@ export async function PATCH(request: Request) {
     return NextResponse.json(result);
 
   } catch (error) {
+    console.error('Error PATCH request:', error);
+    return NextResponse.json({ error: 'Patch todo task' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const url  = new URL(request.url);
+    const id   = url.pathname.split('/')[3];
+		const token = cookies().get('accessToken')?.value || ''
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/todo/${id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      redirect: "follow"
+    })
+    const result = await response.json();
+    return NextResponse.json(result);
+  } catch (error) {
     console.error('Error handling PATCH request:', error);
-    return NextResponse.json({ error: 'An error occurred' }, { status: 500 });
+    return NextResponse.json({ error: 'Delete todo task' }, { status: 500 });
   }
 }

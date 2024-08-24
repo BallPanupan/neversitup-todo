@@ -1,42 +1,27 @@
+"use client"
 import React, { useEffect, useState } from 'react'
 import styles from './ModalDeleteTodo.module.css';
-// import { useSession } from 'next-auth/react';
 
 export default function ModalDeleteTodo({ show, onClose, message, confirmRemove }: any) {
-	// const { data: session }: any = useSession();
-	const [token, setToken] = useState(null);
 
 	const deleteTodo = async (id: any) => {
 		try {
-			const response = await fetch(`/service/todo/${id}`, {
+			const response = await fetch(`/api/todo/${id}`, {
 				method: "DELETE",
 				headers: {
 					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${token}`
 				},
 				redirect: "follow"
 			})
-
 			if (!response.ok) {
-				return []
+				return false
 			}
-			const data = await response.json()
-			if (data.isSuccess) console.log(`delete ${id} is done`)
-			onClose()
 			confirmRemove(true)
-
-			return data.data
+			return true
 		} catch {
-			onClose()
-			return []
+			return false
 		}
 	}
-
-	// useEffect(() => {
-	// 	if (session) {
-	// 		setToken(session.user?.access_token);
-	// 	}
-	// }, [session]);
 
 	const id = message?.id;
 	const title = message?.title;
