@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import React from 'react'
 
-export default function () {
+export default function Page() {
   const cookieStore = cookies();
   const token = cookieStore.get('accessToken')?.value;
 
@@ -12,10 +12,10 @@ export default function () {
   }
 
   return (
-    <>
+    <div>
       <h1>Home Page</h1>
       <LoginForm />
-    </>
+    </div>
   )
 }
 
