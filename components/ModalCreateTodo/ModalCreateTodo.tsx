@@ -60,6 +60,7 @@ export default function ModalCreateTodo({ show, onClose, listTodo, setListTodo}:
             type="text"
             placeholder="Title"
             onChange={(e) => setTitle(e.target.value)}
+            required
           />
 
 					<label>Description</label>
@@ -71,6 +72,7 @@ export default function ModalCreateTodo({ show, onClose, listTodo, setListTodo}:
             cols={50}
             placeholder="Description"
             onChange={(e) => setDescription(e.target.value)}
+            required
           />
         </div>
 

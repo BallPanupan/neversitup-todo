@@ -1,6 +1,6 @@
 "use client";
 
-import { createCookie } from "@/app/actions";
+// import { createCookie } from "@/app/actions";
 import { useEffect, useState } from "react";
 
 export const ClientComp =  ({ data, token, logToken}: any) => {
