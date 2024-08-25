@@ -78,10 +78,10 @@ You can view your images created with `docker images`.
 
 ### In existing projects
 
-To add support for Docker to an existing project, just copy the [`Dockerfile`](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) into the root of the project and add the following to the `next.config.js` file:
+To add support for Docker to an existing project, just copy the [`Dockerfile`](https://github.com/vercel/next.js/blob/canary/examples/with-docker/Dockerfile) into the root of the project and add the following to the `next.config.mjs` file:
 
 ```js
-// next.config.js
+// next.config.mjs
 module.exports = {
   // ... rest of the configuration.
   output: "standalone",
